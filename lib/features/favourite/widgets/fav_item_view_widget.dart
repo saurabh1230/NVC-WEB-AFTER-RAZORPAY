@@ -5,6 +5,8 @@ import 'package:stackfood_multivendor/common/widgets/product_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../new_product_widgets/restaurant_product_view_widget.dart';
+
 class FavItemViewWidget extends StatelessWidget {
   final bool isRestaurant;
   const FavItemViewWidget({super.key, required this.isRestaurant});
@@ -52,7 +54,7 @@ class FavRestaurantItemViewWidget extends StatelessWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             child: Center(child: SizedBox(
               width: Dimensions.webMaxWidth,
-              child: ProductViewWidget(
+              child: RestaurantProductViewWidget(
                 isRestaurant: isRestaurant,
                 products: favouriteController.wishProductList,
                 restaurants: favouriteController.wishRestList,

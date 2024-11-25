@@ -29,6 +29,7 @@ class MenuDrawerWidgetState extends State<MenuDrawerWidget> with SingleTickerPro
     Menu(icon: Images.orderMenuIcon, title: 'my_orders'.tr, onTap: () {
       Get.offNamed(RouteHelper.getOrderRoute());
     }),
+
     Menu(icon: Images.location, title: 'my_address'.tr, onTap: () {
       Get.offNamed(RouteHelper.getAddressRoute());
     }),

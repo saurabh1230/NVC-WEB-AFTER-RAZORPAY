@@ -1,11 +1,13 @@
 import 'package:stackfood_multivendor/common/models/response_model.dart';
 import 'package:stackfood_multivendor/features/cart/controllers/cart_controller.dart';
+import 'package:stackfood_multivendor/features/home/screens/home_screen.dart';
 import 'package:stackfood_multivendor/features/profile/controllers/profile_controller.dart';
 import 'package:stackfood_multivendor/features/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor/features/auth/domain/models/signup_body_model.dart';
 import 'package:stackfood_multivendor/features/auth/domain/models/social_log_in_body_model.dart';
 import 'package:stackfood_multivendor/features/auth/domain/services/auth_service_interface.dart';
 import 'package:get/get.dart';
+import 'package:stackfood_multivendor/helper/route_helper.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthServiceInterface authServiceInterface;
@@ -33,8 +35,7 @@ class AuthController extends GetxController implements GetxService {
     update();
     ResponseModel responseModel = await authServiceInterface.login(phone: phone, password: password,customerVerification: Get.find<SplashController>().configModel!.customerVerification!, alreadyInApp: alreadyInApp);
     if(responseModel.isSuccess) {
-      Get.find<ProfileController>().getUserInfo();
-      Get.find<CartController>().getCartDataOnline();
+      Get.offAllNamed(RouteHelper.getAccessLocationRoute('home'));
     }
     _isLoading = false;
     update();

@@ -71,30 +71,49 @@ class VerificationScreenState extends State<VerificationScreen> {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
         child: Center(child: Container(
-          width: context.width > 700 ? 700 : context.width,
+          width: context.width > 700 ? 500 : context.width,
           padding: context.width > 700 ? const EdgeInsets.all(Dimensions.paddingSizeDefault) : null,
           decoration: context.width > 700 ? BoxDecoration(
+            border: Border.all(
+              width: 0.5,
+              color: Theme.of(context).primaryColor
+            ),
             color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-            boxShadow: [BoxShadow(color: Colors.grey[Get.isDarkMode ? 700 : 300]!, blurRadius: 5, spreadRadius: 1)],
+            boxShadow: [BoxShadow(color: Colors.grey[Get.isDarkMode ? 700 : 300]!, blurRadius: 10, spreadRadius: 1)],
           ) : null,
           child: GetBuilder<VerificationController>(builder: (verificationController) {
             return Column(children: [
+                Image.asset(Images.logo,height: ResponsiveHelper.isMobile(context) ? 130 : 200 ,),
 
               Get.find<SplashController>().configModel!.demo! ? Text(
                 'for_demo_purpose'.tr, style: robotoRegular,
               ) : SizedBox(
-                width: 210,
-                child: Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
-                  RichText(text: TextSpan(children: [
+                child: ResponsiveHelper.isMobile(context) ?
+                    Column(
+                      children: [
+                        const SizedBox(height: Dimensions.paddingSizeSmall,),
+                        Text('enter_the_verification_sent_to'.tr,
+                        textAlign: TextAlign.center,
+                        style: robotoRegular.copyWith(color: Theme.of(context).disabledColor) ,),
+                     Text('$_number',
+                       textAlign: TextAlign.center,
+                    style: robotoRegular.copyWith(color: Theme.of(context).primaryColor) ,)
+
+                      ],
+                    ):
+                Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
+                  RichText(textAlign: TextAlign.center,
+                      text: TextSpan(children: [
                     TextSpan(text: 'enter_the_verification_sent_to'.tr, style: robotoRegular.copyWith(color: Theme.of(context).disabledColor)),
-                    TextSpan(text: ' $_number', style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color)),
+                    TextSpan(text: ' $_number', style: robotoMedium.copyWith(color:  Theme.of(context).primaryColor)),
                   ])),
                 ],
                 ),
               ),
+              ResponsiveHelper.isMobile(context) ? SizedBox() : SizedBox(height: Dimensions.paddingSizeSmall,),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 29, vertical: 35),
+                padding: const EdgeInsets.symmetric(horizontal: 29, vertical: 25),
                 child: PinCodeTextField(
                   length: 4,
                   appContext: context,
@@ -102,8 +121,8 @@ class VerificationScreenState extends State<VerificationScreen> {
                   animationType: AnimationType.slide,
                   pinTheme: PinTheme(
                     shape: PinCodeFieldShape.box,
-                    fieldHeight: 60,
-                    fieldWidth: 60,
+                    fieldHeight: ResponsiveHelper.isMobile(context) ? 60 : 50,
+                    fieldWidth: ResponsiveHelper.isMobile(context) ? 60 : 50,
                     borderWidth: 1,
                     borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                     selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
@@ -128,7 +147,7 @@ class VerificationScreenState extends State<VerificationScreen> {
                   buttonText: 'verify'.tr,
                   isLoading: verificationController.isLoading,
                   onPressed: () {
-                    Get.dialog(Center(child: NewPassScreen(resetToken: verificationController.verificationCode, number : _number, fromPasswordChange: true, fromDialog: true)));
+                    // Get.dialog(Center(child: NewPassScreen(resetToken: verificationController.verificationCode, number : _number, fromPasswordChange: true, fromDialog: true)));
                     if(widget.fromSignUp) {
                       verificationController.verifyPhone(_number, widget.token).then((value) {
                         if(value.isSuccess) {
@@ -201,7 +220,7 @@ class VerificationScreenState extends State<VerificationScreen> {
                         });
                       }
                     } : null,
-                    child: Text('${'resend_it'.tr}${_seconds > 0 ? ' (${_seconds}s)' : ''}', style: TextStyle(color: Theme.of(context).primaryColor),),
+                    child: Text('${'Resend It'.tr}${_seconds > 0 ? ' (${_seconds}s)' : ''}', style: TextStyle(color: Theme.of(context).primaryColor),),
                   ),
                 ]),
               ),

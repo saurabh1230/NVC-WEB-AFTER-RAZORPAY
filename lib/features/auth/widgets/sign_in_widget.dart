@@ -157,9 +157,9 @@ class SignInWidgetState extends State<SignInWidget> {
 
           const SizedBox(height: Dimensions.paddingSizeExtraLarge),
 
-          const SocialLoginWidget(),
-
-          isDesktop ? const SizedBox() : const GuestButtonWidget(),
+          // const SocialLoginWidget(),
+          //
+          // isDesktop ? const SizedBox() : const GuestButtonWidget(),
 
         ]),
       );
